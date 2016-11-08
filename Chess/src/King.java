@@ -13,8 +13,10 @@ public class King extends GamePiece{
 	private ImageIcon wSprite, bSprite;
 	private Color color;
 	private int xLoc,yLoc;
+	private Tile[][] board;
 
 	public King(ImageIcon wSprite, ImageIcon bSprite, Color color){
+		board = Board.tileArray;
 		this.wSprite = wSprite;
 		this.bSprite = bSprite;
 		this.color = color;
@@ -27,10 +29,92 @@ public class King extends GamePiece{
 	}
 
 	@Override
-	public void move() {
-	
+	public void moveSet(int x, int y) {
+		board[x][y].setBackground(Color.blue);
 		
+		
+		try {
+		if(board[x+1][y].getGamePiece() == null){
+			board[x+1][y].setBackground(Color.green);
+		} else if(board[x+1][y].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+			board[x+1][y].setBackground(Color.yellow);
+		}
+		} catch(ArrayIndexOutOfBoundsException ex){
+			
+		}
+		
+		try {
+		if(board[x-1][y].getGamePiece() == null){
+			board[x-1][y].setBackground(Color.green);
+		} else if(board[x-1][y].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+			board[x-1][y].setBackground(Color.yellow);
+		}
+		} catch(ArrayIndexOutOfBoundsException ex){
+			
+		}
+		
+		try {
+		if(board[x][y+1].getGamePiece() == null){
+			board[x][y+1].setBackground(Color.green);
+		} else if(board[x][y+1].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+			board[x][y+1].setBackground(Color.yellow);
+		}
+		} catch(ArrayIndexOutOfBoundsException ex){
+			
+		}
+		
+		try {
+		if(board[x][y-1].getGamePiece() == null){
+			board[x][y-1].setBackground(Color.green);
+		} else if(board[x][y-1].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+			board[x][y-1].setBackground(Color.yellow);
+		}
+		} catch(ArrayIndexOutOfBoundsException ex){
+			
+		}
+		
+		try {
+		if(board[x+1][y+1].getGamePiece() == null){
+			board[x+1][y+1].setBackground(Color.green);
+		} else if(board[x+1][y+1].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+			board[x+1][y+1].setBackground(Color.yellow);
+		}
+		} catch (ArrayIndexOutOfBoundsException ex){
+			
+		}
+		
+		try {
+		if(board[x+1][y-1].getGamePiece() == null){
+			board[x+1][y-1].setBackground(Color.green);
+		} else if(board[x+1][y-1].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+			board[x+1][y-1].setBackground(Color.yellow);
+		}
+		} catch (ArrayIndexOutOfBoundsException ex) {
+			
+		}
+		
+		try {
+		if(board[x-1][y-1].getGamePiece() == null){
+			board[x-1][y-1].setBackground(Color.green);
+		} else if(board[x-1][y-1].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+			board[x-1][y-1].setBackground(Color.yellow);
+		}
+		} catch(ArrayIndexOutOfBoundsException ex){
+			
+		}
+		
+		try {
+		if(board[x-1][y+1].getGamePiece() == null){
+			board[x-1][y+1].setBackground(Color.green);
+		} else if(board[x-1][y+1].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+			board[x-1][y+1].setBackground(Color.yellow);
+		}
+		} catch(ArrayIndexOutOfBoundsException ex){
+			
+		}
 	}
+		
+	
 
 	@Override
 	public boolean isTaken() {
@@ -45,7 +129,7 @@ public class King extends GamePiece{
 	}
 
 	@Override
-	public boolean check() {
+	public boolean check(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
 	}

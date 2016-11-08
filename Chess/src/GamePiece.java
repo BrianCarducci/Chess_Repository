@@ -10,10 +10,10 @@ public abstract class GamePiece extends JLabel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public abstract void move();
+	public abstract void moveSet(int x, int y);
 	public abstract boolean isTaken();
 	public abstract Point getSquare();
-	public abstract boolean check();
+	public abstract boolean check(int x, int y);
 	public abstract boolean checkMate();
 	public abstract Color getColor();
 //	public abstract int getX();

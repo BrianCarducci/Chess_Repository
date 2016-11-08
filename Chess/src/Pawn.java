@@ -17,10 +17,12 @@ public class Pawn extends GamePiece{
 	private static final long serialVersionUID = -2766797591173892923L;
 	private ImageIcon wSprite, bSprite;
 	private Color color;
+	private Tile[][] board;
 	boolean firstMove;
 	
 	public Pawn(ImageIcon wSprite, ImageIcon bSprite, Color color){
 		super();
+		board = Board.tileArray;
 		firstMove = true;
 		this.wSprite = wSprite;
 		this.bSprite = bSprite;
@@ -32,11 +34,81 @@ public class Pawn extends GamePiece{
 			setIcon(bSprite);
 		}
 	}
-
-	@Override
-	public void move() {
 	
+	@Override
+	public void moveSet(int x, int y) {
+		
+		int r;
+		int n;
+		try{
+			if(getColor() == Color.black){
+				r = 1;
+				n = 2;
+			} else {
+				r = -1;
+				n = -2;
+			}
+		
+		if(getFirstMove()){
+			System.out.println("iz firstmove");
+			board[x][y].setBackground(Color.blue);
+			board[x][y].repaint();
+			
+			System.out.println("truuu");
+			if(board[x+r][y].getGamePiece() == null){
+				board[x+r][y].setBackground(Color.green);
+			} 
+			if(board[x+n][y].getGamePiece() == null){
+				if(board[x+r][y].getGamePiece() == null){
+				board[x+n][y].setBackground(Color.green);
+				} else {
+					
+				}
+			} 
+			if(board[x+r][y+r].getGamePiece() != null){
+				if(board[x+r][y+r].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+				board[x+r][y+r].setBackground(Color.yellow);
+				}
+			}
+			if(board[x+r][y-r].getGamePiece() != null){
+				if(board[x+r][y-r].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+					board[x+r][y+r].setBackground(Color.yellow);
+				}
+			}
+		
+		} else {
+			
+			System.out.println("iz not first move");
+			board[x][y].setBackground(Color.blue);
+			board[x][y].repaint();
+			if(board[x+r][y].getGamePiece() == null){
+				board[x+r][y].setBackground(Color.green);
+			} 
+			if(board[x+r][y-r].getGamePiece() != null){
+				if(board[x+r][y-r].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+					board[x+r][y-r].setBackground(Color.yellow);
+				}
+			}
+			if(board[x+r][y+r].getGamePiece() != null){
+				if(board[x+r][y+r].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
+				board[x+r][y+r].setBackground(Color.yellow);
+				System.out.println("checking for enemies");
+			}
+		}
+		}
+		
+		//firstTile.getGamePiece().setFirstMove(false);
+		//Board.firstClick = false;
+		} catch (ArrayIndexOutOfBoundsException a){
+			System.out.println("caught");
+			board[x][y].setBackground(Color.blue);
+		}
 	}
+	
+	
+	
+	
+	
 
 	@Override
 	public boolean isTaken() {
@@ -51,7 +123,7 @@ public class Pawn extends GamePiece{
 	}
 
 	@Override
-	public boolean check() {
+	public boolean check(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -54,9 +54,6 @@ public class Board extends JFrame{
 		bQueen = new ImageIcon("Images/black_queen_small.png");
 		bKing = new ImageIcon("Images/black_king_small.png");
 		
-		
-		System.out.println(bPawn);
-		
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(8,8));
 		panel.setVisible(true);
