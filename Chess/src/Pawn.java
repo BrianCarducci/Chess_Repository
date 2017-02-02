@@ -15,17 +15,14 @@ import javax.swing.JPanel;
 public class Pawn extends GamePiece{
 	
 	private static final long serialVersionUID = -2766797591173892923L;
-	private ImageIcon wSprite, bSprite;
 	private Color color;
-	private Tile[][] board;
+	private Tile[][] tileArray;
 	boolean firstMove;
 	
-	public Pawn(ImageIcon wSprite, ImageIcon bSprite, Color color){
+	public Pawn(ImageIcon wSprite, ImageIcon bSprite, Color color, Tile[][] tileArray){
 		super();
-		board = Board.tileArray;
+		this.tileArray = tileArray;
 		firstMove = true;
-		this.wSprite = wSprite;
-		this.bSprite = bSprite;
 		this.color = color;
 
 		if(color == Color.white){
@@ -51,58 +48,63 @@ public class Pawn extends GamePiece{
 		
 		if(getFirstMove()){
 			System.out.println("iz firstmove");
-			board[x][y].setBackground(Color.blue);
-			board[x][y].repaint();
+			tileArray[x][y].setBackground(Color.blue);
+			tileArray[x][y].repaint();
 			
 			System.out.println("truuu");
-			if(board[x+r][y].getGamePiece() == null){
-				board[x+r][y].setBackground(Color.green);
+			if(tileArray[x+r][y].getGamePiece() == null){
+				tileArray[x+r][y].setBackground(Color.green);
 			} 
-			if(board[x+n][y].getGamePiece() == null){
-				if(board[x+r][y].getGamePiece() == null){
-				board[x+n][y].setBackground(Color.green);
+			if(tileArray[x+n][y].getGamePiece() == null){
+				if(tileArray[x+r][y].getGamePiece() == null){
+				tileArray[x+n][y].setBackground(Color.green);
 				} else {
 					
 				}
 			} 
-			if(board[x+r][y+r].getGamePiece() != null){
-				if(board[x+r][y+r].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
-				board[x+r][y+r].setBackground(Color.yellow);
+			if(tileArray[x+r][y+r].getGamePiece() != null){
+				if(tileArray[x+r][y+r].getGamePiece().getColor() != tileArray[x][y].getGamePiece().getColor()){
+				tileArray[x+r][y+r].setBackground(Color.yellow);
 				}
 			}
-			if(board[x+r][y-r].getGamePiece() != null){
-				if(board[x+r][y-r].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
-					board[x+r][y+r].setBackground(Color.yellow);
+			if(tileArray[x+r][y-r].getGamePiece() != null){
+				if(tileArray[x+r][y-r].getGamePiece().getColor() != tileArray[x][y].getGamePiece().getColor()){
+					tileArray[x+r][y+r].setBackground(Color.yellow);
 				}
 			}
 		
 		} else {
 			
 			System.out.println("iz not first move");
-			board[x][y].setBackground(Color.blue);
-			board[x][y].repaint();
-			if(board[x+r][y].getGamePiece() == null){
-				board[x+r][y].setBackground(Color.green);
+			tileArray[x][y].setBackground(Color.blue);
+			tileArray[x][y].repaint();
+			if(tileArray[x+r][y].getGamePiece() == null){
+				tileArray[x+r][y].setBackground(Color.green);
 			} 
-			if(board[x+r][y-r].getGamePiece() != null){
-				if(board[x+r][y-r].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
-					board[x+r][y-r].setBackground(Color.yellow);
+			if(tileArray[x+r][y-r].getGamePiece() != null){
+				if(tileArray[x+r][y-r].getGamePiece().getColor() != tileArray[x][y].getGamePiece().getColor()){
+					tileArray[x+r][y-r].setBackground(Color.yellow);
 				}
 			}
-			if(board[x+r][y+r].getGamePiece() != null){
-				if(board[x+r][y+r].getGamePiece().getColor() != board[x][y].getGamePiece().getColor()){
-				board[x+r][y+r].setBackground(Color.yellow);
+			if(tileArray[x+r][y+r].getGamePiece() != null){
+				if(tileArray[x+r][y+r].getGamePiece().getColor() != tileArray[x][y].getGamePiece().getColor()){
+				tileArray[x+r][y+r].setBackground(Color.yellow);
 				System.out.println("checking for enemies");
 			}
 		}
 		}
 		
 		//firstTile.getGamePiece().setFirstMove(false);
-		//Board.firstClick = false;
+		//tileArray.firstClick = false;
 		} catch (ArrayIndexOutOfBoundsException a){
 			System.out.println("caught");
-			board[x][y].setBackground(Color.blue);
+			tileArray[x][y].setBackground(Color.blue);
 		}
+	}
+	
+	@Override
+	public void setCheckTiles(int x, int y) {
+		
 	}
 	
 	

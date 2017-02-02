@@ -18,26 +18,25 @@ public class Tile extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Color color;
 	private GamePiece gamePiece;
-	private Board board;
-	private Tile tile = this;
 	private static Boolean firstClick = true;
 	private static int x, y;
 	private static Tile firstTile, secondTile;
+	private Tile[][] tileArray;
 	private static boolean whiteMove = true;
-	private boolean check;
+	private boolean whiteCheckSpace, blackCheckSpace;
 	
-	public Tile(Color color, GamePiece gamePiece){
+	public Tile(Color color, GamePiece gamePiece, boolean whiteCheckSpace, boolean blackCheckSpace, Tile[][] tileArray){
 		this.color = color;
-		//this.isOccupied = isOccupied;
 		this.setOpaque(true);
 		this.setBackground(color);
 		this.gamePiece = gamePiece;
+		this.whiteCheckSpace = whiteCheckSpace;
+		this.blackCheckSpace = blackCheckSpace;
+		this.tileArray = tileArray;
 		
 		try{
 			this.add(gamePiece);
-		} catch(NullPointerException e){
-			
-		}
+		} catch(NullPointerException e){}
 
 		this.addMouseListener(new MouseEvents());
 	}
@@ -45,10 +44,6 @@ public class Tile extends JPanel {
 	
 	public GamePiece getGamePiece(){
 		return gamePiece;
-	}
-	
-	public void setGamePiece(GamePiece newPiece){
-		gamePiece = newPiece;
 	}
 	
 	public boolean getFirstClick(){
@@ -59,26 +54,47 @@ public class Tile extends JPanel {
 		return color;
 	}
 	
+	public void setGamePiece(GamePiece newPiece){
+		gamePiece = newPiece;
+	}
+	
+	public void setBlackCheckSpace(boolean checkSpace){
+		blackCheckSpace = checkSpace;
+	}
+	
+	public void setWhiteCheckSpace(boolean checkSpace){
+		whiteCheckSpace = checkSpace;
+	}
+	
+	public boolean isBlackCheckSpace(){
+		return blackCheckSpace;
+	}
+	
+	public boolean isWhiteCheckSpace(){
+		return whiteCheckSpace;
+	}
+	
+//	public boolean isCheckSpace(){
+//		return checkSpace;
+//	}
+	
 	private class MouseEvents implements MouseListener {
 		
 		@Override
 		public void mouseClicked(MouseEvent e){
 			
-			System.out.println(firstClick);
-			firstTile = (Tile)e.getSource();
-			System.out.println(firstClick);
-			if(firstClick){
-				if (firstTile.getGamePiece() == null){
+			firstTile = (Tile) e.getSource();
+			if (firstClick) {
+				if (firstTile.getGamePiece() == null) {
 					
 				}
 				else if (whiteMove && getGamePiece().getColor() == Color.white || !whiteMove && getGamePiece().getColor() == Color.black){
-					for(int i = 0; i < 8; i++) {
-						for(int j = 0; j < 8; j++) {
-							if(Board.tileArray[i][j] == e.getSource()) { 
-								firstTile = Board.tileArray[i][j];
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; j++) {
+							if (tileArray[i][j] == e.getSource()) { 
+								firstTile = tileArray[i][j];
 								x = i;
 								y = j;
-								System.out.println("in names for loop");
 								break;
 							}
 						}
@@ -86,45 +102,47 @@ public class Tile extends JPanel {
 					
 					//Retrieves and displays the move set of the clicked piece
 					getGamePiece().moveSet(x, y);
-					
 					firstClick = false;
-					System.out.println("right after " + firstClick);
 			}
 			
 
-///////////////////////////////////////////CODE BELOW HANDELS SECOND CLICK\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//////////////////////////////////////////////////////CODE BELOW HANDELS SECOND CLICK\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 						
 						
 				} else {
+					
 				secondTile = (Tile) e.getSource();
-				if(secondTile.getBackground() == Color.green){
-					for(int i = 0; i < 8; i++){
-						for(int j = 0; j < 8; j++){
-							Board.tileArray[i][j].setBackground(Board.tileArray[i][j].getColor());
+				
+				if (secondTile.getBackground() == Color.green) {
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; j++) {
+							tileArray[i][j].setBackground(tileArray[i][j].getColor());
+							if (tileArray[i][j].getGamePiece() != null) {
+							}
 						}
 					}
-					secondTile.setGamePiece(Board.tileArray[x][y].getGamePiece());
-					secondTile.add(Board.tileArray[x][y].getGamePiece());
+					secondTile.setGamePiece(tileArray[x][y].getGamePiece());
+					secondTile.add(tileArray[x][y].getGamePiece());
 					secondTile.getGamePiece().setFirstMove(false);
 					secondTile.repaint();
-					Board.tileArray[x][y].remove(Board.tileArray[x][y].getGamePiece());
-					Board.tileArray[x][y].setGamePiece(null);
-					Board.tileArray[x][y].repaint();
+					tileArray[x][y].remove(tileArray[x][y].getGamePiece());
+					tileArray[x][y].setGamePiece(null);
+					tileArray[x][y].repaint();
 					whiteMove = !whiteMove;
 					System.out.println("green spot selected");
 					
-				} else if(secondTile.getBackground() == Color.yellow){
+				} else if (secondTile.getBackground() == Color.yellow) {
 					
 					secondTile.remove(secondTile.getGamePiece());
-					secondTile.setGamePiece(Board.tileArray[x][y].getGamePiece());
-					secondTile.add(Board.tileArray[x][y].getGamePiece());
-					Board.tileArray[x][y].getGamePiece().setFirstMove(false);
-					Board.tileArray[x][y].remove(firstTile.getGamePiece());
-					Board.tileArray[x][y].setGamePiece(null);
-					for(int i = 0; i < 8; i++){
-						for(int j = 0; j < 8; j++){
-							Board.tileArray[i][j].setBackground(Board.tileArray[i][j].getColor());
-							Board.tileArray[i][j].repaint();
+					secondTile.setGamePiece(tileArray[x][y].getGamePiece());
+					secondTile.add(tileArray[x][y].getGamePiece());
+					tileArray[x][y].getGamePiece().setFirstMove(false);
+					tileArray[x][y].remove(firstTile.getGamePiece());
+					tileArray[x][y].setGamePiece(null);
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; j++) {
+							tileArray[i][j].setBackground(tileArray[i][j].getColor());
+							tileArray[i][j].repaint();
 						}
 					}
 					
@@ -132,25 +150,42 @@ public class Tile extends JPanel {
 					whiteMove = !whiteMove;
 					
 					
-		} else if(secondTile.getBackground() == Color.white || secondTile.getBackground() == Color.darkGray || secondTile.getBackground() == Color.blue){
-			for(int i = 0; i < 8; i++){
-				for(int j = 0; j < 8; j++){
-					Board.tileArray[i][j].setBackground(Board.tileArray[i][j].getColor());
+		} else if (secondTile.getBackground() == Color.white || secondTile.getBackground() == Color.darkGray || secondTile.getBackground() == Color.blue){
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					tileArray[i][j].setBackground(tileArray[i][j].getColor());
 				}
 			}
-		}		
-				
-				//ALGORITHM FOR CHECKING FOR CHECK/CHECKMATE
-				for(int i = 0; i < 8; i++){
-					for (int j = 0; j < 8; j++){
-						if (Board.tileArray[i][j].getGamePiece() != null && whiteMove && Board.tileArray[i][j].getColor() == Color.BLACK){
-							Board.tileArray[i][j].getGamePiece().check(i, j);
-						}
-						else if (Board.tileArray[i][j].getGamePiece() != null && !whiteMove && Board.tileArray[i][j].getColor() == Color.WHITE){
-							Board.tileArray[i][j].getGamePiece().check(i, j);
+		}
+				for (int i = 0; i < 8; i++) {
+					for (int j = 0; j < 8; j++) {
+						if (tileArray[i][j] == secondTile) {
+							x = i;
+							y = j;
+							System.out.println("second click loc: (" + x + ", " + y + ")");
+							break;
 						}
 					}
 				}
+				
+//				for (int i = 0; i < 8; i++) {
+//					for (int j = 0; j < 8; j++) {
+//						if (tileArray[i][j].getGamePiece() != null) {
+//							tileArray[i][j].setBlackCheckSpace(false);
+//							tileArray[i][j].setWhiteCheckSpace(false);
+//						}
+//					}
+//				} 
+				
+				for (int i = 0; i < 8; i++) {
+					for (int j = 0; j < 8; j++) {
+						if (tileArray[i][j].getGamePiece() != null) {
+							tileArray[i][j].getGamePiece().setCheckTiles(x, y);
+						}
+					}
+				}
+				
+		
 				firstClick = true;
 				}
 		}
@@ -161,8 +196,8 @@ public class Tile extends JPanel {
 					Border border = BorderFactory.createBevelBorder(BevelBorder.RAISED); 
 					setBorder(border);
 				}
-				
 			}
+			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				setBorder(null);

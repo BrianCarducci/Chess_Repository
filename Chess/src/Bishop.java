@@ -10,14 +10,11 @@ public class Bishop extends GamePiece{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ImageIcon wSprite, bSprite;
 	private Color color;
-	private Tile[][] board;
+	private Tile[][] tileArray;
 
-	public Bishop(ImageIcon wSprite, ImageIcon bSprite, Color color){
-		board = Board.tileArray;
-		this.wSprite = wSprite;
-		this.bSprite = bSprite;
+	public Bishop(ImageIcon wSprite, ImageIcon bSprite, Color color, Tile[][] tileArray){
+		this.tileArray = tileArray;
 		this.color = color;
 		
 		if (color == Color.white){
@@ -31,16 +28,16 @@ public class Bishop extends GamePiece{
 	public void moveSet(int x, int y) {
 		int i = x;
 		int j = y;
-		board[x][y].setBackground(Color.blue);
+		tileArray[x][y].setBackground(Color.blue);
 		try{
-			while(board[i+1][j+1].getGamePiece() == null){
-				board[i+1][j+1].setBackground(Color.green);
+			while(tileArray[i+1][j+1].getGamePiece() == null){
+				tileArray[i+1][j+1].setBackground(Color.green);
 				i++;
 				j++;
 			}
 			
-			if(getColor() != board[i+1][j+1].getGamePiece().getColor()){
-				board[i+1][j+1].setBackground(Color.yellow);
+			if(getColor() != tileArray[i+1][j+1].getGamePiece().getColor()){
+				tileArray[i+1][j+1].setBackground(Color.yellow);
 			}
 			i = x;
 			j = y;							
@@ -49,13 +46,13 @@ public class Bishop extends GamePiece{
 			j = y;	
 		}
 		try{
-			while(board[i+1][j-1].getGamePiece() == null){
-				board[i+1][j-1].setBackground(Color.green);
+			while(tileArray[i+1][j-1].getGamePiece() == null){
+				tileArray[i+1][j-1].setBackground(Color.green);
 				i++;
 				j--;
 			}
-			if(getColor() != board[i+1][j-1].getGamePiece().getColor()){
-				board[i+1][j-1].setBackground(Color.yellow);
+			if(getColor() != tileArray[i+1][j-1].getGamePiece().getColor()){
+				tileArray[i+1][j-1].setBackground(Color.yellow);
 			}
 			i = x;
 			j = y;	
@@ -64,13 +61,13 @@ public class Bishop extends GamePiece{
 			j = y;	
 		}
 		try{
-			while(board[i-1][j-1].getGamePiece() == null){
-				board[i-1][j-1].setBackground(Color.green);
+			while(tileArray[i-1][j-1].getGamePiece() == null){
+				tileArray[i-1][j-1].setBackground(Color.green);
 				i--;
 				j--;
 			}
-			if(getColor() != board[i-1][j-1].getGamePiece().getColor()){
-				board[i-1][j-1].setBackground(Color.yellow);
+			if(getColor() != tileArray[i-1][j-1].getGamePiece().getColor()){
+				tileArray[i-1][j-1].setBackground(Color.yellow);
 			}
 			i = x;
 			j = y;	
@@ -79,13 +76,13 @@ public class Bishop extends GamePiece{
 			j = y;	
 		}
 		try{
-			while(board[i-1][j+1].getGamePiece() == null){
-				board[i-1][j+1].setBackground(Color.green);
+			while(tileArray[i-1][j+1].getGamePiece() == null){
+				tileArray[i-1][j+1].setBackground(Color.green);
 				i--;
 				j++;
 			}
-			if(getColor() != board[i-1][j+1].getGamePiece().getColor()){
-				board[i-1][j+1].setBackground(Color.yellow);
+			if(getColor() != tileArray[i-1][j+1].getGamePiece().getColor()){
+				tileArray[i-1][j+1].setBackground(Color.yellow);
 			}
 			i = x;
 			j = y;	
@@ -95,11 +92,15 @@ public class Bishop extends GamePiece{
 		}
 		for (int q = 0; q < 8; q++){
 			for (int w = 0; w < 8; w++){
-				board[q][w].repaint();
+				tileArray[q][w].repaint();
 			}
 		}
 	}
+	
+	@Override
+	public void setCheckTiles(int x, int y) {
 		
+	}
 
 	@Override
 	public boolean isTaken() {
