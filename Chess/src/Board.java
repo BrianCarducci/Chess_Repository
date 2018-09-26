@@ -24,19 +24,19 @@ public class Board extends JFrame {
 		this.setVisible(true);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		
-		wPawn = new ImageIcon("Images/small_w_pawn.png");
-		wKnight = new ImageIcon("Images/white_knight_small.png");
-		wBishop = new ImageIcon("Images/white_bishop_small.png");
-		wRook = new ImageIcon("Images/white_rook_small.png");
-		wKing = new ImageIcon("Images/white_king_small.jpg");
-		wQueen = new ImageIcon("Images/white_queen_small.png");
+		wPawn = new ImageIcon("../Images/small_w_pawn.png");
+		wKnight = new ImageIcon("../Images/white_knight_small.png");
+		wBishop = new ImageIcon("../Images/white_bishop_small.png");
+		wRook = new ImageIcon("../Images/white_rook_small.png");
+		wKing = new ImageIcon("../Images/white_king_small.jpg");
+		wQueen = new ImageIcon("../Images/white_queen_small.png");
 		
-		bPawn = new ImageIcon("Images/black_pawn_small.png");
-		bKnight = new ImageIcon("Images/black_knight_small.png");
-		bBishop = new ImageIcon("Images/black_bishop_small.png");
-		bRook = new ImageIcon("Images/black_rook_small.png");
-		bQueen = new ImageIcon("Images/black_queen_small.png");
-		bKing = new ImageIcon("Images/black_king_small.png");
+		bPawn = new ImageIcon("../Images/black_pawn_small.png");
+		bKnight = new ImageIcon("../Images/black_knight_small.png");
+		bBishop = new ImageIcon("../Images/black_bishop_small.png");
+		bRook = new ImageIcon("../Images/black_rook_small.png");
+		bQueen = new ImageIcon("../Images/black_queen_small.png");
+		bKing = new ImageIcon("../Images/black_king_small.png");
 		
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(8,8));
